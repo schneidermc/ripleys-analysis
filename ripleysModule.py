@@ -34,7 +34,6 @@ class RipleysInterface:
             K.append(ripleysCurves['K'])
             L.append(ripleysCurves['H'])
             H.append(ripleysCurves['L'])
-        print("Done.")
         
         meanControl = calculateRipleysMean(K)
         
