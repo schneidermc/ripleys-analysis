@@ -100,9 +100,11 @@ for path, filename in zip(cellPaths, filenames):
 
 #%% Average Ripleys matrices over all cells
 meanMatrix = np.mean( np.dstack(allIntegrals), axis=2)
+print(f'Matrix of integrals over normalized Ripleys curves:\n {meanMatrix}')
 
 #%% Confidence intervals for integrals
 ci_integrals = getIntegralConfidenceInterval(radii)
+print(f'Confidence interval for integral over normalized Ripleys curves:\n {ci_integrals}')
 
 
 #%% Runtime
