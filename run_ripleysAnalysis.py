@@ -72,6 +72,10 @@ def performRipleysMultiAnalysis(path, filename, fileIDs, radii, nRandomControls=
     
     return ripleysResults, ripleysIntegrals
 
+def getIntegralConfidenceInterval(radii):
+    lim = max(radii)-min(radii)
+    return [-lim,lim] 
+
 
 #%% Set file paths and parameters
 
@@ -96,6 +100,9 @@ for path, filename in zip(cellPaths, filenames):
 
 #%% Average Ripleys matrices over all cells
 meanMatrix = np.mean( np.dstack(allIntegrals), axis=2)
+
+#%% Confidence intervals for integrals
+ci_integrals = getIntegralConfidenceInterval(radii)
 
 
 #%% Runtime

@@ -93,8 +93,14 @@ class RipleysInterface:
         quantilesK = [np.quantile(x, quantile) for x in np.transpose(self.ripleysCurves_controls['K'])]
         return np.array(quantilesK)
 
-    def calculateRipleysIntegral(self):
-        integral = np.trapz(self.ripleysCurves_data['normalized'], self.radii)
+    def calculateRipleysIntegral(self,interval=None):
+        if interval==None:
+            integral = np.trapz(self.ripleysCurves_data['normalized'], self.radii)
+        else:
+            f_limits = np.interp(interval, self.ripleysCurves_data['normalized'], self.radii)
+            f = [f_limits[0], self.ripleysCurves_data['normalized'], f_limits[1]]
+            x = [interval[0], self.radii, interval[1]]
+            integral = np.trapz(f, x)
         return integral
     
     def plot(self, ci=0.95, normalized=True, showControls=False, title=None, labelFontsize=14, axes=None):
