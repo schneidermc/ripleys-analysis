@@ -58,6 +58,7 @@ class LocalizationData:
         for k in tqdm(range(self.nReceptors)):
             tree = KDTree(self.data[k])
             forest.append(tree)
+        print('\n')
         return forest
             
     def plot(self, receptor='all', title=None):
