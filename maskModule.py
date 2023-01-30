@@ -43,7 +43,6 @@ class Mask:
         nSample = int(density * imageArea) # density points in mask, scale to whole image
         
         points = np.random.uniform(0, self.mask.shape[0], size=(nSample,2)) # create points in units of pixels
-        # TODO: get borders of mask in order to make random number generation a bit more efficient
         
         # Reject points outside of mask
         (steps_x, steps_y) = (1,1)
