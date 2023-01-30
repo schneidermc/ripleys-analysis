@@ -15,6 +15,8 @@ import maskModule as mm
 import dataModule as dm
 import ripleysModule as rm
 
+np.random.seed(0) # initialize random seed
+
 tstart = time.time()
 
 
@@ -43,7 +45,7 @@ def performRipleysMultiAnalysis(path, filename, fileIDs, radii, nRandomControls=
     
     for j in range(nFiles):
         for k in range(nFiles):
-            print(f'Analyzing files {fileIDs[j]} with {fileIDs[k]}...')
+            print(f'Analyzing interaction between receptor {fileIDs[j]} and {fileIDs[k]}...')
             if j==k:
                 ripleysResults[j][k] = rm.RipleysAnalysis(locData.forest[j], radii, cellMask, nRandomControls)
             else:
