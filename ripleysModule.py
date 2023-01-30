@@ -48,22 +48,23 @@ class RipleysInterface:
     
     def getRipleysCurves(self, data, otherData=None, area=None):
         assert (area is not None), "Input parameter area not specified, area is None"
-
-        if isTree(data):
-            N = data.n
-        else:
-            N = data.shape[0]
-        density = N / area
+        
+        n1 = getNumberPoints(data)
         
         if otherData is None:
+            density = n1 / area
+            
             tree = getTree(data)  
-            nNeighbors = tree.count_neighbors(tree, self.radii) - N
+            nNeighbors = tree.count_neighbors(tree, self.radii) - n1
         else:
+            n2 = getNumberPoints(otherData)
+            density = n2 / area
+            
             tree = getTree(data)
             otherTree = getTree(otherData)
             nNeighbors = tree.count_neighbors(otherTree, self.radii)
         
-        K = ((nNeighbors / N) / density)
+        K = ((nNeighbors / n1) / density)
         L = np.sqrt(K / np.pi)
         H = L - self.radii
         
