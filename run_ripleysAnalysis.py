@@ -27,6 +27,11 @@ def performRipleysMultiAnalysis(path, filename, fileIDs, radii, nRandomControls=
     #%% Load data
     nFiles = len(fileIDs)
     locData = dm.loadLocalizationData(path, filename, fileIDs)
+
+    #%% Create subfolder for results
+    results_path = os.path.join(path, 'results')
+    if not os.path.exists(results_path):
+        os.makedirs(results_path)
     
     #%% Mask
 
@@ -37,7 +42,8 @@ def performRipleysMultiAnalysis(path, filename, fileIDs, radii, nRandomControls=
     ## Create mask from all localization data
     cellMask = mm.createMask(locData.allData, locData.pixelsize)
     cellMask.plot()
-    cellMask.save(path, f'{filename}_mask')
+    cellMask.save(results_path, f'{filename}_mask')
+
 
     #%% Perform Ripley's analysis for all data pairs
     ripleysResults = rm.initializeResultsMatrix(nFiles)
@@ -59,6 +65,8 @@ def performRipleysMultiAnalysis(path, filename, fileIDs, radii, nRandomControls=
         for k in range(nFiles):
             ripleysResults[j][k].plot(ci=0.95, normalized=True, showControls=True,
                                       title=f"Receptor {fileIDs[j]} with {fileIDs[k]}", labelFontsize=30, axes=axs[j][k])
+    fig.savefig(os.path.join(results_path, f'{filename}_ripleys_normalized'))
+    
             
     # Unnormalized plot
     fig, axs = plt.subplots(nFiles, nFiles, figsize=(figsize, figsize))
@@ -66,16 +74,20 @@ def performRipleysMultiAnalysis(path, filename, fileIDs, radii, nRandomControls=
         for k in range(nFiles):
             ripleysResults[j][k].plot(ci=0.95, normalized=False, showControls=True,
                                       title=f"Receptor {fileIDs[j]} with {fileIDs[k]}", labelFontsize=30, axes=axs[j][k])
+    fig.savefig(os.path.join(results_path, f'{filename}_ripleys_unnormalized'))
     
     # Print and save integral matrix
-    print(f'Integral matrix:\n{ripleysIntegrals}\n')
-    integralfile = os.path.join(path, f'{filename}_ripleysIntegrals')
+    print(f'Integral matrix:\n{ripleysIntegrals}')
+    integralfile = os.path.join(results_path, f'{filename}_ripleysIntegrals')
     np.save(integralfile, ripleysIntegrals)
+    np.savetxt(integralfile+'.dat', ripleysIntegrals, delimiter='\t')
+
+    print(f'Results saved in {results_path}\n')
     
     return ripleysResults, ripleysIntegrals
 
 def getIntegralConfidenceInterval(radii):
-    lim = max(radii)-min(radii)
+    lim = float(max(radii)-min(radii))
     return [-lim,lim] 
 
 
@@ -102,7 +114,7 @@ for path, filename in zip(cellPaths, filenames):
 
 #%% Average Ripleys matrices over all cells
 meanMatrix = np.mean( np.dstack(allIntegrals), axis=2)
-print(f'Matrix of integrals over normalized Ripleys curves:\n {meanMatrix}')
+print(f'Average integral matrix of normalized Ripleys curves over all analyzed files:\n {meanMatrix}')
 
 #%% Confidence intervals for integrals
 ci_integrals = getIntegralConfidenceInterval(radii)

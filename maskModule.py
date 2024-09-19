@@ -36,6 +36,11 @@ class Mask:
     def save(self, path, filename):
         maskfile = os.path.join(path, filename)
         np.save(maskfile, self.mask)
+        # Save as tiff
+        from PIL import Image
+        mask = np.flipud(self.mask)
+        im = Image.fromarray(mask)
+        im.save(f'{maskfile}.tiff')
         
     def randomPoints(self, nPoints):
         imageArea = (self.mask.shape[0] * self.mask.shape[1])
