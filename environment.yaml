@@ -1,0 +1,13 @@
+name: ripleys
+channels:
+  - conda-forge
+dependencies:
+  - h5py
+  - matplotlib
+  - numpy
+  - pandas
+  - scipy
+  - tqdm
+  - pytables
+  - python=3.10
+  - pyyaml
