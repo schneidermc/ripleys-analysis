@@ -1,17 +1,18 @@
-# Ripley's K analysis
+# Ripley's K Analysis
 
-This repository provides code for Ripley's K analysis.
+This repository contains code for performing Ripley’s K analysis, a spatial point pattern analysis technique commonly used in microscopy and spatial statistics.
+
+The core functionality of this package has been incorporated into the [`picasso-workflow`](https://github.com/jungmannlab/picasso-workflow) repository maintained by the Jungmann lab at the Max Planck Institute of Biochemistry. You can find it as a submodule at [`picasso_workflow/ripleys_analysis`](https://github.com/jungmannlab/picasso-workflow/tree/master/picasso_workflow/ripleys_analysis).
 
 ### Setup
-Run the following line from the terminal to create a new environment ripleys:
-```
+To run this package individually, run the following line from the terminal to create and activate a new environment `ripleys`:
+```bash
 conda env create -f environment.yaml
-```
-
-Activate the environment:
-```
 conda activate ripleys
 ```
 
 ### Run analysis
-Run the file `run_ripleysAnalysis.py`.
+To perform Ripley’s K analysis, run
+```bash
+python run_ripleysAnalysis.py
+```
