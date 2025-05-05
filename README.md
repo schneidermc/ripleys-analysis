@@ -12,7 +12,7 @@ conda activate ripleys
 ```
 
 ### Run analysis
-To perform Ripley’s K analysis, run
+To perform Ripley’s K analysis, set the filenames for your data in `run_ripleysAnalysis.py`, then run:
 ```bash
 python run_ripleysAnalysis.py
 ```

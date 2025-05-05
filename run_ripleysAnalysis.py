@@ -94,9 +94,9 @@ def getIntegralConfidenceInterval(radii):
 #%% Set file paths and parameters
 
 # NOTE: Change paths and filenames to the actual data, same file is taken multiple times here for demonstration purpose only
-cellPaths = ["./data/Cell3", "./data/Cell3", "./data/Cell3"]
-filenames = ['MutuDC_6h_stimuli', 'MutuDC_6h_stimuli', 'MutuDC_6h_stimuli']
-fileIDs = [1,3] #[1,2,3,4,5,6] # use list(range(1,7)) for all from 1 to 6
+cellPaths = ["./data/Cell3"]
+filenames = ['MutuDC_6h_stimuli']
+fileIDs = list(range(1,7))
 
 nRandomControls = 100
 rmax = 200
